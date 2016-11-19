@@ -1,0 +1,13 @@
+{
+  "web":  {
+    "baseURL": "http://localhost:8585/litecart/admin/",
+    "username": "admin",
+    "password": "admin"
+  },
+  "db":  {
+    "host": "localhost",
+    "name": "litecart",
+    "user": "root",
+    "password": ""
+  }
+}
