@@ -1,6 +1,7 @@
 {
   "web":  {
-    "baseURL": "http://localhost:8585/litecart/admin/",
+    "loginURL": "http://localhost:8585/litecart/admin/",
+    "baseURL": "http://localhost:8585/litecart/en/",
     "username": "admin",
     "password": "admin"
   },

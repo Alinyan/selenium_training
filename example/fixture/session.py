@@ -9,7 +9,7 @@ class SessionHelper:
         self.app = app
 
     def login(self, username="admin", password="admin"):
-        self.app.navigation.open_start_page()
+        self.app.navigation.open_login_page()
         # Input usename
         self.app.wd.find_element_by_name("username").send_keys("%s" % username)
         # Input password

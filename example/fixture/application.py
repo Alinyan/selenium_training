@@ -21,6 +21,7 @@ class Application:
         self.session = SessionHelper(self)
         self.navigation = NavigationHelper(self)
         self.baseURL = web_conf['baseURL']
+        self.loginURL = web_conf['loginURL']
         self.username = web_conf['username']
         self.password = web_conf['password']
 

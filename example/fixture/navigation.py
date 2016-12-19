@@ -7,6 +7,9 @@ class NavigationHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_login_page(self):
+        self.app.wd.get(self.app.loginURL)
+
     def open_start_page(self):
         self.app.wd.get(self.app.baseURL)
 
@@ -25,4 +28,12 @@ class NavigationHelper:
                     assert self.are_elements_present(self.app.wd, By.XPATH, '//h1') == 1     # проверяем наличие заголовка на странице
 
     def are_elements_present(self, driver, *args):
+        """ Проверка наличия элемента"""
         return len(driver.find_elements(*args)) > 0
+
+    def check_count_sticker_product(self):
+        # проходим цикл по всем продуктам, содержащим стикер
+        list_product = self.app.wd.execute_script("return $('.image-wrapper')")
+        for product in list_product:
+             count_sticker = len(product.find_elements_by_class_name('sticker'))
+             assert count_sticker == 1
