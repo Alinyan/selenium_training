@@ -19,7 +19,7 @@ def app(request):
     browser = request.config.getoption("--browser")
     web_conf = load_config(request.config.getoption("--config"))['web']
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, baseURL=web_conf["baseURL"], web_username=web_conf["username"], web_password=web_conf["password"])
+        fixture = Application(browser=browser, web_conf=web_conf)
     return fixture
 
 @pytest.fixture(scope="session", autouse=True)

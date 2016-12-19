@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from fixture.session import SessionHelper
-from fixture.navigation import NavigationHelper
+from navigation import NavigationHelper
+from session import SessionHelper
 
 
 class Application:
 
-    def __init__(self, browser, baseURL, web_username, web_password):
+    def __init__(self, browser, web_conf):
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
@@ -17,12 +17,12 @@ class Application:
             self.wd = webdriver.Opera()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        self.wd = webdriver.Ie()
+        self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.navigation = NavigationHelper(self)
-        self.baseURL = baseURL
-        self.username = web_username
-        self.password = web_password
+        self.baseURL = web_conf['baseURL']
+        self.username = web_conf['username']
+        self.password = web_conf['password']
 
     def is_valid(self):
         try:
