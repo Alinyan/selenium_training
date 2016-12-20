@@ -19,6 +19,9 @@ class NavigationHelper:
     def open_geozones_page(self):
         self.app.wd.get('http://localhost:8585/litecart/admin/?app=geo_zones&doc=geo_zones')
 
+    def open_first_campaign_product_page(self):
+        self.app.wd.find_element_by_css_selector("#box-campaigns .link").click()
+
     def click_left_elements_of_menu_and_check_header(self):
         # проходим цикл по всем пунктам меню
         for index in range(len(self.app.wd.find_elements_by_id("app-"))):

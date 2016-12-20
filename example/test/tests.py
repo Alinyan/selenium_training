@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.country import Country
 from model.geozone import Geozone
+from webcolors import *
 
 def test_login(app):
     app.session.login(app.username, app.password)
@@ -34,3 +35,37 @@ def test_check_sorting_geozones(app):
         zone_list = app.geozone.get_zone_list_for_country(country.name)
         sorted_zone_list = sorted(zone_list, key=Geozone.name_geozone)
         assert sorted_zone_list == zone_list
+
+def test_check_product_page(app):
+    app.session.login(app.username, app.password)
+    app.navigation.open_start_page()
+    # переход на страницу со всеми товарами
+    name_from_main_page = app.product.get_first_product_name_from_main_page()
+    regular_price_from_main_page = app.product.get_first_product_regular_price_from_main_page()
+    campaign_price_from_main_page = app.product.get_first_product_campaign_price_from_main_page()
+    color_regular_price_from_main_page = app.product.get_style_regular_price_from_main_page('color')
+    color_campaign_price_from_main_page = app.product.get_style_campaign_price_from_main_page('color')
+    text_style_regular_price_from_main_page = app.product.get_style_regular_price_from_main_page('text-decoration')
+    text_style_campaign_price_from_main_page = app.product.get_style_campaign_price_from_main_page('font-weight')
+    # переход на страницу товара
+    app.navigation.open_first_campaign_product_page()
+    name_from_from_product_page = app.product.get_first_product_name_from_product_page()
+    regular_price_from_product_page = app.product.get_first_product_regular_price_from_product_page()
+    campaign_price_from_product_page = app.product.get_first_product_campaign_price_from_product_page()
+    color_regular_price_from_product_page = app.product.get_style_regular_price_from_product_page('color')
+    color_campaign_price_from_product_page = app.product.get_style_campaign_price_from_product_page('color')
+    text_style_regular_price_from_product_page = app.product.get_style_regular_price_from_product_page('text-decoration')
+    text_style_campaign_price_from_product_page = app.product.get_style_campaign_price_from_product_page('font-weight')
+    # проверки
+    assert name_from_main_page == name_from_from_product_page
+    assert regular_price_from_main_page == regular_price_from_product_page
+    assert campaign_price_from_main_page == campaign_price_from_product_page
+    assert color_regular_price_from_main_page == 'rgba(119, 119, 119, 1)'
+    assert color_regular_price_from_product_page == 'rgba(102, 102, 102, 1)'
+    assert color_campaign_price_from_main_page == 'rgba(204, 0, 0, 1)'
+    assert color_campaign_price_from_product_page == 'rgba(204, 0, 0, 1)'
+    assert text_style_regular_price_from_main_page == 'line-through'
+    assert text_style_campaign_price_from_main_page == '900'
+    assert text_style_regular_price_from_product_page == 'line-through'
+    assert text_style_campaign_price_from_product_page == '700'
+

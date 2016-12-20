@@ -5,6 +5,7 @@ from session import SessionHelper
 from check import CheckHelper
 from country import CountryHelper
 from geozone import GeozoneHelper
+from product import ProductHelper
 
 
 class Application:
@@ -26,6 +27,7 @@ class Application:
         self.check = CheckHelper(self)
         self.country = CountryHelper(self)
         self.geozone = GeozoneHelper(self)
+        self.product = ProductHelper(self)
         self.adminURL = web_conf['adminURL']
         self.baseURL = web_conf['baseURL']
         self.username = web_conf['username']
