@@ -2,6 +2,9 @@
 from selenium import webdriver
 from navigation import NavigationHelper
 from session import SessionHelper
+from check import CheckHelper
+from country import CountryHelper
+from geozone import GeozoneHelper
 
 
 class Application:
@@ -17,11 +20,14 @@ class Application:
             self.wd = webdriver.Opera()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        self.wd.implicitly_wait(10)
+        self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.navigation = NavigationHelper(self)
+        self.check = CheckHelper(self)
+        self.country = CountryHelper(self)
+        self.geozone = GeozoneHelper(self)
+        self.adminURL = web_conf['adminURL']
         self.baseURL = web_conf['baseURL']
-        self.loginURL = web_conf['loginURL']
         self.username = web_conf['username']
         self.password = web_conf['password']
 
