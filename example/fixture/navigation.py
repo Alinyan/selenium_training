@@ -19,6 +19,9 @@ class NavigationHelper:
     def open_geozones_page(self):
         self.app.wd.get('http://localhost:8585/litecart/admin/?app=geo_zones&doc=geo_zones')
 
+    def open_create_account_page(self):
+        self.app.wd.get('http://localhost:8585/litecart/en/create_account')
+
     def open_first_campaign_product_page(self):
         self.app.wd.find_element_by_css_selector("#box-campaigns .link").click()
 

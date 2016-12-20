@@ -8,7 +8,7 @@ class SessionHelper:
     def __init__(self, app):
         self.app = app
 
-    def login(self, username="admin", password="admin"):
+    def login_to_admin(self, username="admin", password="admin"):
         self.app.navigation.open_login_page()
         # Input usename
         self.app.wd.find_element_by_name("username").send_keys("%s" % username)
@@ -18,3 +18,7 @@ class SessionHelper:
         self.app.wd.find_element_by_name("login").click()
         # Confirm title
         WebDriverWait(self.app.wd, 5).until(EC.title_is("My Store"))
+
+    def logout_from_admin(self):
+        self.app.wd.find_element_by_css_selector('.fa-sign-out.fa-lg').click()
+

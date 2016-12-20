@@ -6,6 +6,7 @@ from check import CheckHelper
 from country import CountryHelper
 from geozone import GeozoneHelper
 from product import ProductHelper
+from account import AccountHelper
 
 
 class Application:
@@ -28,6 +29,7 @@ class Application:
         self.country = CountryHelper(self)
         self.geozone = GeozoneHelper(self)
         self.product = ProductHelper(self)
+        self.account = AccountHelper(self)
         self.adminURL = web_conf['adminURL']
         self.baseURL = web_conf['baseURL']
         self.username = web_conf['username']
