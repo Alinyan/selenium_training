@@ -22,7 +22,7 @@ class Application:
             self.wd = webdriver.Opera()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        self.wd.implicitly_wait(5)
+        self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.navigation = NavigationHelper(self)
         self.check = CheckHelper(self)
