@@ -4,6 +4,7 @@ from model.product import Product
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class ProductHelper:
@@ -12,6 +13,7 @@ class ProductHelper:
 
     def __init__(self, app):
         self.app = app
+        self.wait = WebDriverWait(self.app.wd, 10)
 
     def get_first_product_name_from_main_page(self):
         name_product = self.app.wd.find_element_by_css_selector("#box-campaigns .name").text
@@ -84,7 +86,7 @@ class ProductHelper:
         save_button = self.app.wd.find_element_by_name("save")
         ActionChains(self.app.wd).move_to_element(save_button).click_and_hold().release().perform()
         # Confirm title
-        WebDriverWait(self.app.wd, 30).until(EC.title_is('Catalog | My Store'))
+        self.wait.until(EC.title_is('Catalog | My Store'))
 
     def get_product_list(self):
         self.app.navigation.open_catalog_page()
@@ -98,4 +100,26 @@ class ProductHelper:
         self.app.navigation.open_catalog_page()
         products = self.app.wd.find_elements_by_link_text("%s" % product.name)
         return len(products)
+
+    def add_to_cart_random_product(self):
+        self.app.navigation.open_start_page()
+        random.choice(self.app.wd.find_elements_by_css_selector(".image-wrapper")).click()
+        if self.app.navigation.are_elements_present(self.app.wd, By.CLASS_NAME, 'options'):
+            random.choice(self.app.wd.find_elements_by_xpath("//*[@class='options']/*/option[not(@selected)]")).click()
+        old_count = self.app.wd.find_element_by_css_selector("span.quantity").text.encode('utf-8')
+        self.app.wd.find_element_by_name("add_cart_product").click()
+        new_count = int(old_count) + 1
+        self.wait.until(EC.text_to_be_present_in_element((By.XPATH, "//span[@class='quantity']"), str(new_count)))
+
+    def delete_all_products_from_cart(self):
+        self.app.navigation.open_start_page()
+        self.app.wd.find_element_by_css_selector("#cart .link").click()
+        count_products = len(self.app.wd.find_elements_by_class_name('shortcut'))
+        for i in range(count_products-1):
+            element_in_table = self.app.wd.find_elements_by_css_selector(".dataTable tr td.item")[0]
+            self.app.wd.find_elements_by_css_selector(".shortcut a")[0].click()
+            self.app.wd.find_element_by_name("remove_cart_item").click()
+            self.wait.until(EC.staleness_of(element_in_table))
+        self.app.wd.find_element_by_name("remove_cart_item").click()
+        self.wait.until(EC.staleness_of(element_in_table))
 
