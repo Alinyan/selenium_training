@@ -23,6 +23,10 @@ class NavigationHelper:
         self.app.wd.find_element_by_css_selector("#app-:nth-child(2)").click()  # кликаем на элемент
         self.app.wd.find_element_by_css_selector("#doc-catalog").click()  # кликаем на элемент
 
+    def open_page_of_creating_country(self):
+        self.app.navigation.open_countries_page()
+        self.app.wd.find_element_by_css_selector("#content .button").click()
+
     def open_create_account_page(self):
         self.app.wd.get('http://localhost:8585/litecart/en/create_account')
 

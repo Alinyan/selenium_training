@@ -116,3 +116,9 @@ def test_working_with_cart(app):
     app.product.add_to_cart_random_product()    # третий случай продукт
     app.product.delete_all_products_from_cart()   # удаляем поочередно все продукты из корзины
 
+def test_checking_link_for_opening_in_new_window(app):
+    app.session.login_to_admin(app.username, app.password)
+    app.navigation.open_page_of_creating_country()
+    app.country.check_opening_external_links_in_new_window()
+
+
