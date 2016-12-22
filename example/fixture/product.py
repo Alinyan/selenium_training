@@ -123,3 +123,15 @@ class ProductHelper:
         self.app.wd.find_element_by_name("remove_cart_item").click()
         self.wait.until(EC.staleness_of(element_in_table))
 
+    def get_logs_browser_all_products(self):
+        count_products = len(self.app.wd.find_elements_by_css_selector(".row:nth-child(1n+4) td:nth-child(3) a:nth-child(2)"))
+        for i in range(count_products):
+            element = self.app.wd.find_elements_by_css_selector(".row:nth-child(1n+4) td:nth-child(3) a:nth-child(2)")
+            element[i].click()
+            logs = self.app.wd.get_log("browser")
+            for log in logs:
+                print('\n %s' % log)
+            self.app.wd.back()
+        return logs
+
+

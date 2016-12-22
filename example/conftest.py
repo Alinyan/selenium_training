@@ -30,7 +30,7 @@ def stop(request):
     return fixture
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="ie")
+    parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--config", action="store", default="config.json")
 
 

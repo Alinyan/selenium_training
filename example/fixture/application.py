@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium import webdriver
 from navigation import NavigationHelper
 from session import SessionHelper
@@ -7,22 +8,22 @@ from country import CountryHelper
 from geozone import GeozoneHelper
 from product import ProductHelper
 from account import AccountHelper
+from listener import ListenerHelper
 
 
 class Application:
 
     def __init__(self, browser, web_conf):
         if browser == "firefox":
-            self.wd = webdriver.Firefox()
+            self.wd = EventFiringWebDriver(webdriver.Firefox(), ListenerHelper())
         elif browser == "chrome":
-            self.wd = webdriver.Chrome()
+            self.wd = EventFiringWebDriver(webdriver.Chrome(), ListenerHelper())
         elif browser == "ie":
-            self.wd = webdriver.Ie()
+            self.wd = EventFiringWebDriver(webdriver.Ie(), ListenerHelper())
         elif browser == "opera":
-            self.wd = webdriver.Opera()
+            self.wd = EventFiringWebDriver(webdriver.Opera(), ListenerHelper())
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.navigation = NavigationHelper(self)
         self.check = CheckHelper(self)
@@ -34,6 +35,8 @@ class Application:
         self.baseURL = web_conf['baseURL']
         self.username = web_conf['username']
         self.password = web_conf['password']
+        self.wd.implicitly_wait(10)
+
 
     def is_valid(self):
         try:
@@ -44,4 +47,3 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
-

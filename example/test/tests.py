@@ -121,4 +121,8 @@ def test_checking_link_for_opening_in_new_window(app):
     app.navigation.open_page_of_creating_country()
     app.country.check_opening_external_links_in_new_window()
 
-
+def test_check_log_of_browser(app):
+    app.session.login_to_admin(app.username, app.password)
+    app.navigation.open_catalog_page()
+    logs = app.product.get_logs_browser_all_products()
+    assert logs == []
