@@ -91,22 +91,7 @@ def test_add_new_product(app):
     app.product.create(added_product)
     list_new = app.product.get_product_list()
     list_old.append(added_product)
-    count = app.product.get_count_product(added_product)
-    assert len(list_old) == len(list_new)
-    assert count == 1
-
-def test_add_new_product(app):
-    char = string.ascii_letters + string.hexdigits  # символы для генерации
-    name = "".join([random.choice(char) for i in range(15)])
-    added_product = Product(name=name, code='1234546', quantity='5,75', keywords='qwerty1',
-                 description='qwerty qwerty', head_title='qwerty2', short_description='qwerty3', meta_description='qwerty4', purchase_price='1456',
-                 pricesUSD='1495', pricesEUR='1460')
-    app.session.login_to_admin(app.username, app.password)
-    list_old = app.product.get_product_list()
-    app.product.create(added_product)
-    list_new = app.product.get_product_list()
-    list_old.append(added_product)
-    count = app.product.get_count_product(added_product)
+    count = app.product.get_count_products(added_product)
     assert len(list_old) == len(list_new)
     assert count == 1
 
@@ -126,3 +111,9 @@ def test_check_log_of_browser(app):
     app.navigation.open_catalog_page()
     logs = app.product.get_logs_browser_all_products()
     assert logs == []
+
+def test_page_object_working_with_cart(app):
+    app.scenario.add_to_cart_random_product()    # добавляем первый случайный продукт в корзину
+    app.scenario.add_to_cart_random_product()    # второй случайный продукт
+    app.scenario.add_to_cart_random_product()    # третий случай продукт
+    app.scenario.delete_all_products_from_cart()   # удаляем все продукты из корзины

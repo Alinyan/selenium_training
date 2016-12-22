@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
-from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium import webdriver
-from navigation import NavigationHelper
-from session import SessionHelper
+from selenium.webdriver.support.events import EventFiringWebDriver
+
+from account import AccountHelper
 from check import CheckHelper
 from country import CountryHelper
 from geozone import GeozoneHelper
-from product import ProductHelper
-from account import AccountHelper
 from listener import ListenerHelper
+from navigation import NavigationHelper
+from product import ProductHelper
+from session import SessionHelper
+from scenario import ScenarioHelper
+from page.CartPage import CartPageHelper
+from page.ProductPage import ProductPageHelper
+from page.MainPage import MainPageHelper
+
 
 
 class Application:
@@ -31,6 +37,10 @@ class Application:
         self.geozone = GeozoneHelper(self)
         self.product = ProductHelper(self)
         self.account = AccountHelper(self)
+        self.scenario = ScenarioHelper(self)
+        self.ProductPage = ProductPageHelper(self)
+        self.MainPage = MainPageHelper(self)
+        self.CartPage = CartPageHelper(self)
         self.adminURL = web_conf['adminURL']
         self.baseURL = web_conf['baseURL']
         self.username = web_conf['username']

@@ -96,7 +96,7 @@ class ProductHelper:
             product_list.append(Product(name=product.text.encode('utf-8')))
         return product_list
 
-    def get_count_product(self, product):
+    def get_count_products(self, product):
         self.app.navigation.open_catalog_page()
         products = self.app.wd.find_elements_by_link_text("%s" % product.name)
         return len(products)
@@ -135,5 +135,7 @@ class ProductHelper:
                 print('\n %s' % log)
             self.app.wd.back()
         return logs
+
+
 
 
